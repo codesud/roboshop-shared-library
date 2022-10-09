@@ -7,7 +7,7 @@ def lintChecks() {
     '''
 }
 
-def call() {
+def call() {    // call is the default function which will be called by default
 pipeline {
     agent any
     stages {
