@@ -15,9 +15,11 @@ pipeline {
 }  // end of function call
 
 // defining the lintcheck function
-def lintcheck(COMPONENT) {     // Declaring a function
-    echo "lint checks started for ${COMPONENT}" 
+def lintChecks() {
+  sh '''
+    echo installing jslint
+    npm install jslint
+    ~/node_modules/jslint/bin/jslint.js server.js || true
+    echo lint checks completed for ${COMPONENT}
+    '''
 }
-
-info("Hai", "twitter.com")             // Calling a function
-
