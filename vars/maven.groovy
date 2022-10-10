@@ -6,9 +6,12 @@ def lintChecks() {
     '''
 }
 
-def sonarCheck() {
+def sonarCheck() {  // defining the lintcheck function
   sh '''
-    sonar-scanner -Dsonar.host.url=http://172.31.3.80:9000 -Dsonar.sources=. -Dsonar.login={SONAR_USR} -Dsonar.password={SONAR_PSW} -Dsonar.projectKey=shipping -Dsonar.java.binaries=target/classes/
+    mvn --version
+    mvn clean compile
+    pwd && ls -ltr
+    sonar-scanner -Dsonar.host.url=http://172.31.5.124:9000 -Dsonar.sources=. -Dsonar.login={SONAR_USR} -Dsonar.password={SONAR_PSW} -Dsonar.projectKey=shipping -Dsonar.java.binaries=target/classes/
     '''
 }
 
@@ -34,9 +37,14 @@ pipeline {
                     }
                 }
             }
+        stage {
+            steps {
+                sh "echo Doing build"
+                }
+            }
         } //end of the stages
     }  // end of the pipeline
 }  // end of function call
 
-// defining the lintcheck function
+ 
  
