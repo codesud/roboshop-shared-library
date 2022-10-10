@@ -27,6 +27,13 @@ pipeline {
                     }
                 }
             }
+        stage('Sonar Code Quality Check') {
+            steps {
+                script {
+                    sonarCheck()
+                    }
+                }
+            }
         } //end of the stages
     }  // end of the pipeline
 }  // end of function call
