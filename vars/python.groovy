@@ -1,8 +1,8 @@
 def lintChecks() {
   sh '''
-    echo lint checks starting for ${COMPONENT}
-    pip3 install pylint 
-    pylint *.py || true
+    # echo lint checks starting for ${COMPONENT}
+    # pip3 install pylint 
+    # pylint *.py || true
     echo lint checks completed for ${COMPONENT}
     '''
 }
