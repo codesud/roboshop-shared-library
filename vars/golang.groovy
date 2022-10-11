@@ -29,10 +29,28 @@ pipeline {
                     }
                 }
             }
+        stage('Test Cases') {
+            parallel {
+                stage('Unit Testing')
+                    steps {
+                        // mvn test or npm test
+                        sh "echo Unit Testing completed"
+                    }
+                stage('Integration Testing')
+                    steps {
+                        // mvn verify or npm verify
+                        sh "echo Integration Testing completed"
+                    }
+                stage('Function Testing')
+                    steps {
+                        sh "echo Function Testing completed"
+                    }
+                }
+            }
         stage('Build') {
             steps {
                 sh "echo Doing build"
-               }
+                }
             }
         } // end of the stages
     }  // end of the pipeline
