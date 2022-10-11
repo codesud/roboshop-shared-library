@@ -38,6 +38,3 @@ pipeline {
         } //end of the stages
     }  // end of the pipeline
 }  // end of function call
-
- 
- 

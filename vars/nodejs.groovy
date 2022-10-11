@@ -19,9 +19,20 @@ pipeline {
                     }
                 }
             }
+        stage('Sonar Code Quality Check') {
+            steps {
+                script {
+                    common.sonarCheck()
+                    }
+                }
+            }
+        stage {
+            steps {
+                sh "echo Doing build"
+                }
+            }
         } //end of the stages
     }  // end of the pipeline
 }  // end of function call
 
-// defining the lintcheck function
  
