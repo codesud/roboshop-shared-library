@@ -10,6 +10,9 @@ def lintChecks() {
 def call() {    // call is the default function which will be called by default
 pipeline {
     agent any
+    environment { 
+        SONAR = credentials('sonar')
+    }
     stages {
         // This should run for every commit of feature branch
         stage('Lint checks') {
@@ -34,5 +37,3 @@ pipeline {
         } //end of the stages
     }  // end of the pipeline
 }  // end of function call
-
- 
