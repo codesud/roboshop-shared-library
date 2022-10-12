@@ -60,9 +60,7 @@ pipeline {
         stage ('Uploading Artifacts') {
             when {
                 expression { env.TAG_NAME != null }
-            }  
-        }   
-        stage {
+                }  
             steps {
                 sh "echo Doing build"
                 }
