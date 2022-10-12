@@ -16,6 +16,5 @@ def sonarCheck() {  // defining the sonarCheck function
     # chmod +x /tmp/quality-gate.sh && /tmp/quality-gate.sh ${SONAR_USR} ${SONAR_PSW} 172.31.4.93 ${COMPONENT} 
     echo Sonar Checks completed
     '''
-
 }
 

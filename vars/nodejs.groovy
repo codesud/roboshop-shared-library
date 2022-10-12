@@ -47,6 +47,17 @@ pipeline {
                     }
                 }
             }
+        stage('Prepare Artifacts') {
+            steps {
+                sh "npm install"
+                sh "zip ${COMPONENT}.zip node_modules server.js"
+                sh "echo Artifacts Preparation Completed.....................!!!"
+                }
+            }
+        stage ('Uploading Artifacts') {
+            when {
+                expression { env,TAG_NAME != null }
+            }     
         stage {
             steps {
                 sh "echo Doing build"
@@ -55,5 +66,3 @@ pipeline {
         } //end of the stages
     }  // end of the pipeline
 }  // end of function call
-
- 
