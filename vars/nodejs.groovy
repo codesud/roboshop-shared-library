@@ -56,7 +56,7 @@ pipeline {
             }
         stage ('Uploading Artifacts') {
             when {
-                expression { env,TAG_NAME != null }
+                expression { env.TAG_NAME != null }
             }     
         stage {
             steps {
