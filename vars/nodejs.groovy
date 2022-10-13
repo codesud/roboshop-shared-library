@@ -65,6 +65,10 @@ pipeline {
         }
 // Preapring the artifact should happen only of it is does not exist in Nexus
         stage('Prepare Artifacts') {
+            when {
+                expression { env.TAG_NAME != null }
+                expression { env.UPLOAD_STATUS =="" }
+                }  
             steps {
                 sh "npm install" // generates the nodes_modules 
                 sh "zip -r ${COMPONENT}-${TAG_NAME}.zip node_modules server.js"
