@@ -63,7 +63,7 @@ pipeline {
                 expression { env.TAG_NAME != null }
                 }  
             steps {
-                sh 'curl -f -v -u ${NEXUS_USR}:${NEXUS_PSW} --upload-file http://172.31.4.108:8081/repository/${COMPONENT}/${COMPONENT}-${TAG_NAME}.zip'
+                sh "curl -f -v -u ${NEXUS_USR}:${NEXUS_PSW} --upload-file ${COMPONENT}-${TAG_NAME}.zip http://172.31.4.108:8081/repository/${COMPONENT}/${COMPONENT}-${TAG_NAME}.zip"
                 // curl returns failure when failed when you use -f  
                }
             }
