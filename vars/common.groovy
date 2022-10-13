@@ -72,41 +72,59 @@ def testCases() {
   }
 }   
 
-def artifacts() {
-// Checking the presence of Artifact in Nexus
-  stage('Checking the release') {
-    script {
-      env.UPLOAD_STATUS=sh(returnStdout: true, script: "curl http://172.31.4.108:8081/service/rest/repository/browse/${COMPONENT}/ | grep ${COMPONENT}-${TAG_NAME}.zip || true")
-      print UPLOAD_STATUS
-    }
-  }
-  
-  if (env.UPLOAD_STATUS =="") {   //start of if
-    stage('Prepare Artifacts') {
-      if (env.APP_TYPE == "nodejs") {
-        sh "npm install" // generates the nodes_modules 
-        sh "zip -r ${COMPONENT}-${TAG_NAME}.zip node_modules server.js"
-        sh "echo Artifacts Preparation Completed.....................!!!"
-      }
-      else if (env.APP_NAME == "java") {
-        sh "echo java"
-      }
-      else if (env.APP_NAME == "python") {
-        sh "echo python"
-      }
-      else {
-        sh "echo golang "
-      }
-    stage ('Uploading Artifacts') {
-      withCredentials([usernamePassword(credentialsId: 'nexus', passwordVariable: 'NEXUS_PSW', usernameVariable: 'NEXUS_USR')]) {
-        sh 'curl -f -v -u ${NEXUS_USR}:${NEXUS_PSW} --upload-file ${COMPONENT}-${TAG_NAME}.zip http://172.31.4.108:8081/repository/${COMPONENT}/${COMPONENT}-${TAG_NAME}.zip'
-        // curl returns failure when failed when you use -f  
+def artifacts() { 
+
+        stage('Checking the release') {               
+                script {
+                    env.UPLOAD_STATUS=sh(returnStdout: true, script: "curl http://172.31.4.108:8081/service/rest/repository/browse/${COMPONENT}/ |grep ${COMPONENT}-${TAG_NAME}.zip || true")
+                    print UPLOAD_STATUS
+            }
         }
-      }   
-    }    // end of stages
-  }   //end of if
-}  // end of the function
+    if(env.UPLOAD_STATUS == "") {   // Start of if
+        stage('Prepare Artifacts') {
+           if (env.APP_TYPE == "nodejs") {
+               
+                sh "npm install"// Generates the nodes_modules
+                sh "zip -r ${COMPONENT}-${TAG_NAME}.zip node_modules/ server.js" 
+                sh "echo Artifacts Preparation Completed................!!!"
+         
+           } 
+           else if (env.APP_TYPE == "java")  {
+                sh "mvn clean package"
+                sh "mv target/${COMPONENT}-1.0.jar ${COMPONENT}.jar"
+                sh "zip -r ${COMPONENT}-${TAG_NAME}.zip ${COMPONENT}.jar"
+           }
 
-// declarative code checkout code by default, whilst scripted code does not.
+           else if (env.APP_TYPE == "python")  {
+                sh "zip -r ${COMPONENT}-${TAG_NAME}.zip *.py *.ini requirements.txt"
+           }
 
- 
+           else if (env.APP_TYPE == "nginx") {  
+                sh '''
+                  cd static
+                  zip -r ../${COMPONENT}-${TAG_NAME}.zip * 
+                  ''' 
+            } 
+
+           else if (env.APP_TYPE == "golang")  {
+                sh "go mod init ${COMPONENT}"
+                sh "go get"
+                sh "go build"
+                sh "zip -r ${COMPONENT}-${TAG_NAME}.zip ${COMPONENT}"
+               
+           }          
+        }
+     
+      stage('Uploading Artifacts') { 
+        withCredentials([usernamePassword(credentialsId: 'nexus', passwordVariable: 'NEXUS_PSW', usernameVariable: 'NEXUS_USR')]) {
+               sh "ls -ltr"
+               sh "curl -f -v -u ${NEXUS_USR}:${NEXUS_PSW} --upload-file ${COMPONENT}-${TAG_NAME}.zip http://172.31.4.108:8081/repository/${COMPONENT}/${COMPONENT}-${TAG_NAME}.zip"
+               // Curl returns failure when failed when you use -f   
+               }
+            }
+        }  // end of if
+  }
+
+
+
+  // declarative code checkout the code by default, whilst scripted not.
