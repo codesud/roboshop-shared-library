@@ -62,9 +62,9 @@ pipeline {
                 expression { env.TAG_NAME != null }
                 }  
             steps {
-                sh "curl -v -u ${NEXUS_USR}:${NEXUS_PSW} --upload-file http://172.31.4.108:8081/repository/${COMPONENT}/${OMPONENT}.zip"
-                sh "echo Doing build"
-                }
+                sh "curl -f -v -u ${NEXUS_USR}:${NEXUS_PSW} --upload-file http://172.31.4.108:8081/repository/${COMPONENT}/${OMPONENT}.zip"
+                // curl returns failure when failed when you use -f  
+               }
             }
         } //end of the stages
     }  // end of the pipeline
