@@ -53,8 +53,8 @@ pipeline {
             }
         stage('Prepare Artifacts') {
             steps {
-                sh "npm install"
-                sh "zip ${COMPONENT}-${TAG_NAME}.zip node_modules server.js"
+                sh "npm install" // generates the nodes_modules 
+                sh "zip -r ${COMPONENT}-${TAG_NAME}.zip node_modules server.js"
                 sh "echo Artifacts Preparation Completed.....................!!!"
                 }
             }
