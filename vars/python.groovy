@@ -1,7 +1,7 @@
 env.APP_NAME == "python"
 def call() {
     node {
-        git branch: 'main', credentialsId: '1327520b-51c4-486b-b11a-b4d4210bf633', url: 'https://github.com/CodingSudeep/catalogue.git'
+        git branch: 'main', url: 'https://github.com/CodingSudeep/catalogue.git'
         common.lintChecks()
         common.sonarCheck()
         common.testCases()
