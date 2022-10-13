@@ -82,12 +82,10 @@ def artifacts() {
         }
     if(env.UPLOAD_STATUS == "") {   // Start of if
         stage('Prepare Artifacts') {
-           if (env.APP_TYPE == "nodejs") {
-               
+           if (env.APP_TYPE == "nodejs") {          
                 sh "npm install"// Generates the nodes_modules
                 sh "zip -r ${COMPONENT}-${TAG_NAME}.zip node_modules/ server.js" 
                 sh "echo Artifacts Preparation Completed................!!!"
-         
            } 
            else if (env.APP_TYPE == "java")  {
                 sh "mvn clean package"
@@ -117,8 +115,7 @@ def artifacts() {
      
       stage('Uploading Artifacts') { 
         withCredentials([usernamePassword(credentialsId: 'nexus', passwordVariable: 'NEXUS_PSW', usernameVariable: 'NEXUS_USR')]) {
-               sh "ls -ltr"
-               sh 'curl -f -v -u ${NEXUS_USR}:${NEXUS_PSW} --upload-file ${COMPONENT}-${TAG_NAME}.zip http://172.31.4.108:8081/repository/${COMPONENT}/${COMPONENT}-${TAG_NAME}.zip'
+            sh 'curl -f -v -u ${NEXUS_USR}:${NEXUS_PSW} --upload-file ${COMPONENT}-${TAG_NAME}.zip http://172.31.4.108:8081/repository/${COMPONENT}/${COMPONENT}-${TAG_NAME}.zip'
                // Curl returns failure when failed when you use -f   
                }
             }
