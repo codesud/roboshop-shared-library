@@ -1,6 +1,6 @@
 def sonarCheck() {  
   stage ('Sonar Checks') {
-    if (env.APP_NAME == "java") {
+    if (env.APP_TYPE == "java") {
       sh '''
         # mvn clean compile
         # sonar-scanner -Dsonar.host.url=http://172.31.5.124:9000 -Dsonar.sources=. -Dsonar.login={SONAR_USR} -Dsonar.password={SONAR_PSW} -Dsonar.projectKey=${COMPONENT} -Dsonar.java.binaries=target/classes/
@@ -22,7 +22,7 @@ def sonarCheck() {
 
 def lintChecks() {
   stage ('Lint Checks') {
-    if (env.APP_NAME == "nodejs") {
+    if (env.APP_TYPE == "nodejs") {
       sh '''
         # echo installing jslint
         # npm install jslint
@@ -30,14 +30,14 @@ def lintChecks() {
         echo lint checks completed for ${COMPONENT}
         '''
     }
-    else if (env.APP_NAME == "java") {
+    else if (env.APP_TYPE == "java") {
       sh '''
         echo lint checks starting for ${COMPONENT}
         # mvn checkstyle:check
         echo lint checks completed for ${COMPONENT}
         '''       
     }
-    else if (env.APP_NAME == "python") {
+    else if (env.APP_TYPE == "python") {
       sh '''
         # echo lint checks starting for ${COMPONENT}
         # pip3 install pylint 
@@ -115,7 +115,7 @@ def artifacts() {
      
           stage('Uploading Artifacts') { 
             withCredentials([usernamePassword(credentialsId: 'nexus', passwordVariable: 'NEXUS_PSW', usernameVariable: 'NEXUS_USR')]) {
-                sh "curl -f -v -u "${NEXUS_USR}:${NEXUS_PSW}" --upload-file ${COMPONENT}-${TAG_NAME}.zip http://172.31.4.108:8081/repository/${COMPONENT}/${COMPONENT}-${TAG_NAME}.zip"
+                sh "curl -f -v -u ${NEXUS_USR}:${NEXUS_PSW} --upload-file ${COMPONENT}-${TAG_NAME}.zip http://172.31.4.108:8081/repository/${COMPONENT}/${COMPONENT}-${TAG_NAME}.zip"
                  // Curl returns failure when failed when you use -f   
                 }
             }
