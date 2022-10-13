@@ -1,7 +1,7 @@
-env.APP_NAME == "golang"
 def call() {
     node {
         git branch: 'main', url: "https://github.com/CodingSudeep/${COMPONENT}"
+        env.APP_NAME == "golang"
         common.lintChecks()
         common.sonarCheck()
         common.testCases()

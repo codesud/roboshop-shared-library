@@ -1,7 +1,7 @@
-env.APP_NAME == "nodejs"
 def call() {
     node {
         git branch: 'main', url: "https://github.com/CodingSudeep/${COMPONENT}"
+        env.APP_NAME == "nodejs"
         common.lintChecks()
         common.sonarCheck()
         common.testCases()
