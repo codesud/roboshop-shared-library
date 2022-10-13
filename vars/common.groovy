@@ -68,6 +68,7 @@ def testCases() {
       stages['Function Testing'] = {
         sh "echo Function Testing completed"
       }
+    parallel(stages) // declaring parallel stages
   }
 }   
  
