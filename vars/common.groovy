@@ -18,4 +18,38 @@ def sonarCheck() {  // defining the sonarCheck function
     '''
 }
 
-def 
+def lintChecks() {
+  stage ('Lint Checks') {
+    if (env.APP_NAME == "nodejs") {
+      sh '''
+        # echo installing jslint
+        # npm install jslint
+        # ~/node_modules/jslint/bin/jslint.js server.js || true
+        echo lint checks completed for ${COMPONENT}
+        '''
+    }
+    else if (env.APP_NAME == "nodejs") {
+      sh '''
+        echo lint checks starting for ${COMPONENT}
+        # mvn checkstyle:check
+        echo lint checks completed for ${COMPONENT}
+        '''       
+    }
+    else if (env.APP_NAME == "python") {
+      sh '''
+        # echo lint checks starting for ${COMPONENT}
+        # pip3 install pylint 
+        # pylint *.py || true
+        echo lint checks completed for ${COMPONENT}
+        '''
+    }
+    else {
+      sh '''
+        # echo installing jslint
+        # npm install jslint
+        # ~/node_modules/jslint/bin/jslint.js server.js || true
+        echo lint checks completed for ${COMPONENT}
+        '''
+    }
+  }
+}
