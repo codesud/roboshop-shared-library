@@ -1,7 +1,7 @@
 def call() {
     node {
         git branch: 'main', url: "https://github.com/CodingSudeep/${COMPONENT}"
-        env.APP_TYP == "python"
+        env.APP_TYPE == "python"
         common.lintChecks()
         common.sonarCheck()
         common.testCases()
