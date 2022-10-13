@@ -56,7 +56,8 @@ pipeline {
                 expression { env.TAG_NAME != null }
             }
             steps {
-                def UPLOAD_STATUS=sh(returnsStdout: true, script: curl http://3.239.108.34:8081/service/rest/repository/browse/${COMPONENT}/ | grep ${COMPONENT}-${TAG_NAME}.zip )
+                env.UPLOAD_STATUS=sh(returnStdout: true, script: "curl http://172.31.8.134:8081/service/rest/repository/browse/${COMPONENT}/ |grep ${COMPONENT}-${TAG_NAME}.zip || true")
+                print UPLOAD_STATUS
             }
         }
         stage('Prepare Artifacts') {
