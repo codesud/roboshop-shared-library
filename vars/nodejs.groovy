@@ -51,7 +51,8 @@ pipeline {
                     }
                 }
             }
-        stage('Check for presence of Artifacts') {
+// Checking the presence of Artifact in Nexus
+        stage('Checking the release') {
             when {
                 expression { env.TAG_NAME != null }
             }
@@ -62,6 +63,7 @@ pipeline {
                 }
             }
         }
+// Preapring the artifact should happen only of it is does not exist in Nexus
         stage('Prepare Artifacts') {
             steps {
                 sh "npm install" // generates the nodes_modules 
