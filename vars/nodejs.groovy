@@ -51,6 +51,15 @@ pipeline {
                     }
                 }
             }
+        stage('Check for presence of Artifacts') {
+            when {
+                expression { env.TAG_NAME != null }
+            }
+            steps {
+                def UPLOAD_STATUS=sh(returnsStdout: true, script: curl curl http://3.239.108.34:8081/service/rest/repository/browse/${COMPONENT}/ | grep ${COMPONENT}-${TAG_NAME}.zip
+ )
+            }
+        }
         stage('Prepare Artifacts') {
             steps {
                 sh "npm install" // generates the nodes_modules 
