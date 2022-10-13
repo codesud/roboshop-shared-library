@@ -104,3 +104,6 @@ def artifacts() {
     }   // end of stages
   }   //end of if
 }   // end of the function
+
+// declarative code checkout code by default, whilst scripted code does not.
+
