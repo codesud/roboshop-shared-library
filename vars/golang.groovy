@@ -1,7 +1,9 @@
+env.APP_NAME == "golang"
 def call() {
     node {
         common.lintChecks()
         common.sonarCheck()
+        common.testCases()
     }
 }
 
@@ -29,17 +31,17 @@ def call() {
 //             }
 //         stage('Test Cases') {
 //             parallel {
-//                 stage('Unit Testing')
+//                 stage('Unit Testing') {
 //                     steps {
 //                         // mvn test or npm test
 //                         sh "echo Unit Testing completed"
 //                     }
-//                 stage('Integration Testing')
+//                 stage('Integration Testing') {
 //                     steps {
 //                         // mvn verify or npm verify
 //                         sh "echo Integration Testing completed"
 //                     }
-//                 stage('Function Testing')
+//                 stage('Function Testing') {
 //                     steps {
 //                         sh "echo Function Testing completed"
 //                     }

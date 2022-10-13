@@ -55,3 +55,19 @@ def lintChecks() {
     }
   }
 }
+
+def testCases() {
+  stage('Test Cases') {
+    parallel {
+      stage('Unit Testing') {
+        sh "echo Unit Testing completed"
+      }
+      stage('Integration Testing') {
+        sh "echo Integration Testing completed"
+      }
+      stage('Function Testing') {
+        sh "echo Function Testing completed"
+      }
+    }
+  }   
+  

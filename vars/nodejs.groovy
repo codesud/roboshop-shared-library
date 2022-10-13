@@ -1,7 +1,9 @@
+env.APP_NAME == "nodejs"
 def call() {
     node {
         common.lintChecks()
         common.sonarCheck()
+        common.testCases()
     }
 }
 
