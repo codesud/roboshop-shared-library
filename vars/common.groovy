@@ -73,7 +73,6 @@ def testCases() {
 }   
 
 def artifacts() { 
-
         stage('Checking the release') {               
                 script {
                     env.UPLOAD_STATUS=sh(returnStdout: true, script: "curl http://172.31.4.108:8081/service/rest/repository/browse/${COMPONENT}/ |grep ${COMPONENT}-${TAG_NAME}.zip || true")
@@ -82,35 +81,35 @@ def artifacts() {
         }
     if(env.UPLOAD_STATUS == "") {   // Start of if
         stage('Prepare Artifacts') {
-           if (env.APP_TYPE == "nodejs") {          
+            if (env.APP_TYPE == "nodejs") {          
                 sh "npm install"// Generates the nodes_modules
                 sh "zip -r ${COMPONENT}-${TAG_NAME}.zip node_modules/ server.js" 
                 sh "echo Artifacts Preparation Completed................!!!"
-           } 
-           else if (env.APP_TYPE == "java")  {
+            } 
+            else if (env.APP_TYPE == "java")  {
                 sh "mvn clean package"
                 sh "mv target/${COMPONENT}-1.0.jar ${COMPONENT}.jar"
                 sh "zip -r ${COMPONENT}-${TAG_NAME}.zip ${COMPONENT}.jar"
-           }
+            }
 
-           else if (env.APP_TYPE == "python")  {
+            else if (env.APP_TYPE == "python")  {
                 sh "zip -r ${COMPONENT}-${TAG_NAME}.zip *.py *.ini requirements.txt"
-           }
+            }
 
-          //  else if (env.APP_TYPE == "nginx") {  
-          //       sh '''
-          //         cd static
-          //         zip -r ../${COMPONENT}-${TAG_NAME}.zip * 
-          //         ''' 
-          //   } 
+            else if (env.APP_TYPE == "nginx") {  
+                sh '''
+                  cd static
+                  zip -r ../${COMPONENT}-${TAG_NAME}.zip * 
+                  ''' 
+            } 
 
-           else if (env.APP_TYPE == "golang")  {
+            else if (env.APP_TYPE == "golang")  {
                 sh "go mod init ${COMPONENT}"
                 sh "go get"
                 sh "go build"
                 sh "zip -r ${COMPONENT}-${TAG_NAME}.zip ${COMPONENT}"
                
-           }          
+            }          
         }
      
           stage('Uploading Artifacts') { 
@@ -120,7 +119,7 @@ def artifacts() {
                  // Curl returns failure when failed when you use -f   
                 }
             }
-        }  // end of if
+    }  // end of if
   }
 
 
