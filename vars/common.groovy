@@ -119,5 +119,5 @@ def artifacts() {
                  // Curl returns failure when failed when you use -f   
                 }
             }
-    }  // end of if
+      }  // end of if
   }
