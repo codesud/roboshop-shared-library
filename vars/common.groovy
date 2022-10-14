@@ -122,7 +122,4 @@ def artifacts() {
             }
     }  // end of if
   }
-
-
-
-  // declarative code checkout the code by default, whilst scripted not.
+}
