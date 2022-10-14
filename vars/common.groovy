@@ -114,7 +114,7 @@ def artifacts() {
      
           stage('Uploading Artifacts') { 
             withCredentials([usernamePassword(credentialsId: 'nexus', passwordVariable: 'NEXUS_PSW', usernameVariable: 'NEXUS_USR')]) {
-                sh "ls -ltr"
+                sh([script: 'echo hello'])
                 sh "curl -f -v -u ${NEXUS_USR}:${NEXUS_PSW} --upload-file ${COMPONENT}-${TAG_NAME}.zip http://172.31.4.108:8081/repository/${COMPONENT}/${COMPONENT}-${TAG_NAME}.zip" 
                  // Curl returns failure when failed when you use -f   
                 }
