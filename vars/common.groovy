@@ -97,8 +97,10 @@ def artifacts() {
             }
 
             else if (env.APP_TYPE == "nginx") {  
-                sh "cd static"
-                sh "zip -r ../${COMPONENT}-${TAG_NAME}.zip *"
+                sh '''
+                  cd static
+                  zip -r ../${COMPONENT}-${TAG_NAME}.zip *
+                  '''
             } 
 
             else if (env.APP_TYPE == "golang")  {
