@@ -121,4 +121,3 @@ def artifacts() {
             }
     }  // end of if
   }
-}
