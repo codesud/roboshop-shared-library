@@ -13,4 +13,3 @@ def call() {
         // common.artifacts()
         }
     }
-}
