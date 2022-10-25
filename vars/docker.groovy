@@ -4,8 +4,9 @@ def call() {
         git branch: 'main', url: "https://github.com/CodingSudeep/${COMPONENT}"
         env.APP_TYPE == "nodejs"
         
-        stage('Docker Build')
+        stage('Docker Build') {
             sh "docker build ."
+        }
         // common.lintChecks()
         // common.sonarCheck()
         // common.testCases()
