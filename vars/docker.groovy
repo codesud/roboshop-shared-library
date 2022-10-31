@@ -1,7 +1,7 @@
 def call() {
     node {
         sh "rm -rf *"
-        git branch: 'main', url: "https://github.com/b49-clouddevops/${COMPONENT}"
+        git branch: 'main', url: "https://github.com/codesud/${COMPONENT}"
         stage('Docker Build') {           
             sh "docker build -t 213243212489.dkr.ecr.us-east-1.amazonaws.com/${COMPONENT}:latest ."
         }
